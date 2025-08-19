@@ -7,6 +7,7 @@
     },
     "devDependencies": {
         "@popperjs/core": "^2.11.6",
+        "@vitejs/plugin-react": "^4.7.0",
         "autoprefixer": "^10.4.2",
         "axios": "^1.6.4",
         "bootstrap": "^5.2.3",
@@ -17,6 +18,8 @@
     "dependencies": {
         "@popperjs/core": "^2.11.8",
         "bootstrap": "^5.3.3",
-        "bootstrap-icons": "^1.11.3"
+        "bootstrap-icons": "^1.11.3",
+        "react": "^19.1.1",
+        "react-dom": "^19.1.1"
     }
 }
