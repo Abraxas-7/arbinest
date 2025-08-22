@@ -16,7 +16,13 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->text('description')->nullable();
-            $table->foreignId('location_id')->nullable()->constrained('locations')->onDelete('set null');
+            // Campi location integrati direttamente
+            $table->string('location_name')->nullable();        // Nome della location
+            $table->string('location_address')->nullable();     // Indirizzo
+            $table->string('location_city')->nullable();        // Città
+            $table->string('location_province')->nullable();    // Provincia
+            $table->string('location_zip_code')->nullable();    // CAP
+            $table->string('location_country')->default('Italia'); // Paese di default
             $table->dateTime('start');
             $table->dateTime('end')->nullable();
             $table->integer('max_participants')->nullable();

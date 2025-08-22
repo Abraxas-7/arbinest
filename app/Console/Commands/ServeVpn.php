@@ -40,12 +40,17 @@ class ServeVpn extends Command
             "--host=0.0.0.0",
             "--port={$port}",
         ]);
-
-        // Attiva TTY solo su sistemi Unix
-    if (DIRECTORY_SEPARATOR !== '\\') {
-        $process->setTty(true);
-    }
-
-        $process->run();
+        
+        $process->setTimeout(null); // ❌ no limite di 60s
+        $process->setIdleTimeout(null); // ❌ no idle timeout
+        
+        if (DIRECTORY_SEPARATOR !== '\\') {
+            $process->setTty(true);
+        }
+        
+        // esegue e mostra l’output man mano
+        $process->run(function ($type, $buffer) {
+            echo $buffer;
+        });
     }
 }

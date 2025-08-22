@@ -6,19 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
+    // Campi massivamente assegnabili
     protected $fillable = [
-        'user_id', 'title', 'description', 'location_id', 
+        'user_id', 'title', 'description', 
+        'location_name', 'location_address', 'location_city', 'location_province', 'location_zip_code', 'location_country',
         'start', 'end', 'max_participants', 'slug'
     ];
 
+
+    // Relazioni
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function location()
-    {
-        return $this->belongsTo(Location::class);
     }
 
     public function participants()
