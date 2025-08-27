@@ -7,48 +7,32 @@ use Symfony\Component\Process\Process;
 
 class ServeVpn extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'serve:vpn {--port=8000}';
+    protected $description = 'Avvia il server Laravel accessibile in LAN/VPN su una porta definita';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Avvia il server Laravel accessibile in LAN/VPN';
-
-    /**
-     * Execute the console command.
-     */
     public function handle()
     {
         $port = $this->option('port');
 
-        $this->line(PHP_EOL . "====================================");
-        $this->line(PHP_EOL . "🚀 Server di sviluppo avviato!");
-        $this->line("👉 URL: http://localhost:{$port}" . PHP_EOL);
-        $this->line("====================================" . PHP_EOL);
+        $this->info("====================================");
+        $this->info("🚀 Server di sviluppo avviato!");
+        $this->info("👉 URL: http://localhost:{$port}");
+        $this->info("====================================");
 
-        $process = new Process([
-            PHP_BINARY,
-            'artisan',
-            'serve',
-            "--host=0.0.0.0",
-            "--port={$port}",
-        ]);
-        
-        $process->setTimeout(null); // ❌ no limite di 60s
-        $process->setIdleTimeout(null); // ❌ no idle timeout
-        
+        // Usa percorso assoluto di artisan
+        $artisanPath = base_path('artisan');
+
+        $process = new Process([PHP_BINARY, $artisanPath, 'serve', "--host=0.0.0.0", "--port={$port}"]);
+
+        // Disabilita timeout, TTY solo su Linux/macOS
+        $process->setTimeout(null);
+        $process->setIdleTimeout(null);
+
         if (DIRECTORY_SEPARATOR !== '\\') {
             $process->setTty(true);
         }
-        
-        // esegue e mostra l’output man mano
+
+        // Avvia il server e mostra l'output
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });

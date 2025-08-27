@@ -13,7 +13,7 @@ class EventPolicy
     // Se vuoi dare permessi globali agli admin
     public function before(User $user, $ability)
     {
-        if ($user->is_admin) { // devi avere un campo is_admin nella tabella users
+        if ($user->is_admin) {
             return true;
         }
     }
@@ -34,5 +34,17 @@ class EventPolicy
     public function delete(User $user, Event $event)
     {
         return $user->id === $event->user_id;
+    }
+
+    // Chi può vedere la lista degli eventi
+    public function viewAny(User $user)
+    {
+        return true; // Tutti gli utenti autenticati possono vedere la lista
+    }
+
+    // Chi può creare eventi
+    public function create(User $user)
+    {
+        return true; // Tutti gli utenti autenticati possono creare eventi
     }
 }

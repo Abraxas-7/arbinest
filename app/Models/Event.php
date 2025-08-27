@@ -8,9 +8,7 @@ class Event extends Model
 {
     // Campi massivamente assegnabili
     protected $fillable = [
-        'user_id', 'title', 'description', 
-        'location_name', 'location_address', 'location_city', 'location_province', 'location_zip_code', 'location_country',
-        'start', 'end', 'max_participants', 'slug'
+        'user_id', 'title', 'description', 'location', 'date', 'slug'
     ];
 
 
@@ -30,5 +28,13 @@ class Event extends Model
     public function logs()
     {
         return $this->hasMany(Log::class);
+    }
+
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }
